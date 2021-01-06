@@ -1,9 +1,14 @@
-import React from 'react'
+import React, {useRef, useState} from 'react'
+import Episode from './episode'
 
 const ShowDetails = (props) =>{
-    
-    console.log("props here")
-    //let length = props.data[props.data.length-1].season
+
+    const selectedItem = useRef(1)
+    const [season, selectSeason] = useState(1)
+    console.log(selectedItem.current)
+    const listEpisodes = () =>{
+        selectSeason(selectedItem.current.value)
+    }
     return(
         <div className="show-detail-item">
             <div className="show-info">
@@ -16,7 +21,7 @@ const ShowDetails = (props) =>{
             </div>
             <div className="show-episodes">
                 <div className="select-episodes">
-                    <select>
+                    <select ref={selectedItem} onChange={listEpisodes}>
                         { 
                             props.data.map((item,index)=>{
                             let temp = index === 0 ? props.data[index]:props.data[index-1]
@@ -30,7 +35,19 @@ const ShowDetails = (props) =>{
                             }
                             })  
                         }
-                    </select>  
+                    </select> 
+                    <div>
+                        {
+                            props.data.map((item)=>{
+                                
+                                if(item.season == season){console.log(item)
+                                    return <Episode name={item.name} date={item.airdate} number={item.number}/>
+                                }else{
+                                    return ''
+                                }
+                            })
+                        }
+                    </div> 
                 </div>
             </div>
         </div>

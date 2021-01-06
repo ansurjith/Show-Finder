@@ -92,6 +92,7 @@ body {
 .show-episodes {
   display: flex;
   justify-content: flex-start;
+  padding-left: 50px;
 }
 .select-episodes select{
  width: 100%;
@@ -104,11 +105,38 @@ body {
   cursor: pointer;
   line-height: 1.1;
   background: #f2f3f8;
-  background-color: #f2f3f8;
-  background-image: linear-gradient(to top, #f9f9f9, #fff 33%); 
+  background-color:#f2f3f8;
+   
 }
 .show-description-info{
   padding-top: 15px;
+}
+.show-image img{
+  width: 100%;
+  border-radius: 15px;
+}
+
+.episode-wrap {
+  display: flex;
+  padding: 15px;
+}
+
+.episode-number {
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  padding: 15px;
+  background: #0e2338;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 10px;
+}
+.name-date-wrap {
+  padding-left: 10px;
+}
+.episode-name {
+  color: #0e2338;
+  font-weight: 500;
 }
 
 @media only screen and (max-width: 768px) {
@@ -119,6 +147,14 @@ body {
   }
   .show-detail-item{
     grid-template-columns: 100%;
+  }
+  .show-episodes {
+      display: flex;
+      justify-content: center;
+      padding-left: 0;
+  }
+  .search-result-card img {
+      margin-top: -20px;
   }
 }
 
