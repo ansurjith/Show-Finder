@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef  } from 'react';
 import Header from './components/header'
 import Search from './components/searchBox'
 import ShowCard from './components/showCard'
@@ -9,7 +9,10 @@ import { searchShow, fetchShowDetails } from './store/actions'
 import { connect } from 'react-redux'
 
 class App extends Component {
-
+  constructor(props){
+    super(props);
+    this.moveToTop = createRef()
+  }
   state = {
     showData:false,
     showDataInformation:''
@@ -23,9 +26,15 @@ class App extends Component {
   }
 
   showdDetails = (data) =>{
+    this.setState({
+      showDataInformation:''
+    })
+    this.moveToTop.current.scrollIntoView()
     this.props.getShowDetails(data.value)
     let item = this.props.searchResult.find((item)=>{
-      return item.show.id == data.value
+      if(item.show.id == data.value){
+        return item
+      }
     })
     this.setState({
       showDataInformation:item
@@ -33,22 +42,23 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props.showInfo)
+    //console.log(this.props.showInfo)
     return (
       <div >
         <Header/>
         <div className="container-wrap container">
           <div className="search-container">
-              <Search find={this.searchShow}/>
+              <Search find={this.searchShow} focusOnTop={this.moveToTop}/>
           </div>
-          <div className="show-details-container">
+          <div className="show-details-container" ref={this.moveToTop}>
             {this.state.showDataInformation !== '' && this.props.showInfo !== ''?<ShowDetails data={this.props.showInfo}  
             itemInfo={this.state.showDataInformation === ''?'':this.state.showDataInformation}/>:''}
             
           </div>
           <div className="result-wrap">
             {this.props.searchResult === ''?'':
-            this.props.searchResult.map((item) =><ShowCard 
+            this.props.searchResult.map((item,index) =><ShowCard 
+            key={index}
             img={item.show.image !== null?item.show.image.medium:""} 
             title={item.show.name} 
             description={item.show.summary !== null?<TrimHtml data={item.show.summary}/>:''}

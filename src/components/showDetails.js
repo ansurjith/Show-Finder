@@ -1,14 +1,17 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import Episode from './episode'
 
 const ShowDetails = (props) =>{
 
     const selectedItem = useRef(1)
     const [season, selectSeason] = useState(1)
-    console.log(selectedItem.current)
+    
     const listEpisodes = () =>{
         selectSeason(selectedItem.current.value)
     }
+    useEffect(()=>{
+        selectSeason(1)
+    },[props.data])
     return(
         <div className="show-detail-item">
             <div className="show-info">
@@ -24,24 +27,23 @@ const ShowDetails = (props) =>{
                     <select ref={selectedItem} onChange={listEpisodes}>
                         { 
                             props.data.map((item,index)=>{
-                            let temp = index === 0 ? props.data[index]:props.data[index-1]
-                            if(index === 0){
-                                return <option value={item.season}>Season {item.season}</option>
-                            }else{
-                                if(item.season !== temp.season)
-                            return <option value={item.season}>Season {item.season}</option>
-                                else
-                                    return ''
-                            }
+                                let temp = index === 0 ? props.data[index]:props.data[index-1]
+                                if(index === 0){
+                                    return <option key={index} value={item.season}>Season {item.season}</option>
+                                }else{
+                                    if(item.season !== temp.season)
+                                        return <option key={index} value={item.season}>Season {item.season}</option>
+                                    else
+                                        return ''
+                                }
                             })  
                         }
                     </select> 
                     <div>
                         {
-                            props.data.map((item)=>{
-                                
-                                if(item.season == season){console.log(item)
-                                    return <Episode name={item.name} date={item.airdate} number={item.number}/>
+                            props.data.map((item,index)=>{
+                                if(item.season == season){
+                                    return <Episode key={index} name={item.name} date={item.airdate} number={item.number}/>
                                 }else{
                                     return ''
                                 }

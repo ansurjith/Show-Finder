@@ -1,5 +1,6 @@
 html {
   height: 100%;
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;
@@ -95,7 +96,7 @@ body {
   padding-left: 50px;
 }
 .select-episodes select{
- width: 100%;
+  width: 100%;
   min-width: 15ch;
   max-width: 30ch;
   border: 1px solid var(--select-border);

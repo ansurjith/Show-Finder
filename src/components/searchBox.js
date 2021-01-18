@@ -12,7 +12,7 @@ const SearchShow = (props) =>{
         <div className="search">
             <div className="search-input">
                 <FontAwesomeIcon icon={faSearch}/>
-                <input type="text" ref={searchTerm} className="search-input" />
+                <input type="text" ref={searchTerm} className="search-input"/>
             </div>
             <div><Button variant="primary" className="search-button" onClick={()=>props.find(searchTerm.current.value)}>Search</Button></div>
             
